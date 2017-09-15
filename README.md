@@ -9,4 +9,4 @@ Read discussions, ask questions and suggest features on
 
 # Documentation
 
-See Wiki: https://github.com/ihsoft/KSPDev/wiki/ReleaseBuilder
+See Wiki: https://github.com/ihsoft/KSPDev_ReleaseBuilder/wiki
