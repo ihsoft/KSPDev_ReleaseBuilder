@@ -2,7 +2,7 @@
 
 Author: igor.zavoychinskiy@gmail.com
 
-GitHub: https://github.com/ihsoft/KSPDev/tree/master/Sources/ReleaseBuilder
+GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder/tree/master
 
 * * *
 
