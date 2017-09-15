@@ -22,9 +22,3 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org/>
-
-* * *
-
-Author: igor.zavoychinskiy@gmail.com
-
-GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder/tree/master
