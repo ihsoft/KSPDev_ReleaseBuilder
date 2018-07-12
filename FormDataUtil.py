@@ -1,3 +1,7 @@
+# Public domain license.
+# Author: igor.zavoychinskiy@gmail.com
+# GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder
+
 """Provides helpers to deal with the multipart/form-data MIME types."""
 import io
 import json

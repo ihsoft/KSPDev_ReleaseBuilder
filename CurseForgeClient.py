@@ -1,3 +1,7 @@
+# Public domain license.
+# Author: igor.zavoychinskiy@gmail.com
+# GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder
+
 """A client library to communicate with Kerbal CurseForge via API.
 
 Example:

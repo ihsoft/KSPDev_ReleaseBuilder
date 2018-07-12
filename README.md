@@ -6,11 +6,11 @@ version file to preparing final ZIP package.
 
 Author: igor.zavoychinskiy@gmail.com
 
-GitHub: [https://github.com/ihsoft/KSPDev_ReleaseBuilder/tree/master](https://github.com/ihsoft/KSPDev_ReleaseBuilder/tree/master)
+GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder
 
 Read discussions, ask questions and suggest features on
 [forum](http://forum.kerbalspaceprogram.com/index.php?/topic/150786-12-kspdev-logconsole-utils).
 
 # Documentation
 
-See Wiki: [https://github.com/ihsoft/KSPDev_ReleaseBuilder/wiki](https://github.com/ihsoft/KSPDev_ReleaseBuilder/wiki)
+See [Wiki](https://github.com/ihsoft/KSPDev_ReleaseBuilder/wiki).
