@@ -149,7 +149,11 @@ def main(argv):
     print 'ERROR: Cannot find archive: %s' % filename
     exit(-1)
 
-  mod_details = SpacedockClient.GetModDetails(mod_id)
+  try:
+    mod_details = SpacedockClient.GetModDetails(mod_id)
+  except SpacedockClient.AuthorizationRequiredError, ex:
+    # The unpublished mods are not available via API (see issue #186).
+    mod_details = { 'id': mod_id, 'name': '<UNPUBLISHED>' }
 
   # Verify the user's choice...
   print '======> BEGIN CHANGELOG:'
