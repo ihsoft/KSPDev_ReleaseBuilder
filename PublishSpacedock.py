@@ -123,6 +123,7 @@ def main(argv):
           Default: ".+?_(v.+?)\.zip"''')
   opts = vars(parser.parse_args(argv[1:]))
 
+  mod_id = opts['project']
   versions_re = opts['ksp_version']
   game_version = map(
       lambda x: x['name'],
@@ -148,11 +149,14 @@ def main(argv):
     print 'ERROR: Cannot find archive: %s' % filename
     exit(-1)
 
+  mod_details = SpacedockClient.GetModDetails(mod_id)
+
   # Verify the user's choice...
   print '======> BEGIN CHANGELOG:'
   print desc
   print '======> END CHANGELOG:'
   print
+  print 'Mod name: %s (#%s)' % (mod_details['name'], mod_details['id'])
   print 'Upload file:', os.path.abspath(filename)
   print 'Mod version tag:', mod_version
   print 'Add for version:', game_version
@@ -167,7 +171,7 @@ def main(argv):
   print 'Publishing the release...'
 
   # Init Spacedock client.
-  SpacedockClient.MOD_ID = opts['project']
+  SpacedockClient.MOD_ID = mod_id
 
   login = opts['login']
   if not login:
