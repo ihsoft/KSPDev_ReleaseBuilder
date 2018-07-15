@@ -39,6 +39,7 @@ API_BASE_URL = 'https://spacedock.info'
 API_AUTHORIZE = '/api/login'
 API_UPDATE_MOD_TMPL = '/api/mod/{mod_id}/update'
 API_GET_VERSIONS = '/api/kspversions'
+API_GET_MOD = '/api/mod/{mod_id}'
 
 LOGGER = logging.getLogger('ApiClient')
 
@@ -87,6 +88,16 @@ def GetKSPVersions(pattern=None):
     regex = re.compile(pattern)
     return filter(lambda x: regex.match(x['name']), cached_versions)
   return cached_versions
+
+
+def GetModDetails(mod_id):
+  """Gets the mod informnation.
+
+  This call does NOT require authorization.
+  """
+  url = API_BASE_URL + API_GET_MOD.format(mod_id=mod_id)
+  response_obj, _ = _CallAPI(url, None, None)
+  return response_obj
 
 
 def UploadFile(filepath, changelog, mod_version, game_version):
