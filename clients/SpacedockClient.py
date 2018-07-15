@@ -55,6 +55,10 @@ class Error(Exception):
   pass
 
 
+class AuthorizationRequiredError(Error):
+  pass
+
+
 class BadCredentialsError(Error):
   pass
 
@@ -132,13 +136,15 @@ def _CallAPI(url, data, headers, raise_on_error=True):
     response = urllib2.urlopen(request)
     resp_obj = json.loads(response.read())
   except urllib2.HTTPError as ex:
-    if ex.code != 400:
-      raise ex
     resp_obj = { 'error': True, 'reason': ex.reason }
     try:
       resp_obj = json.loads(ex.read())
     except:
       pass  # Not a JSON response
+    if ex.code == 401:
+      raise AuthorizationRequiredError(resp_obj['reason'])
+    if ex.code != 400:
+      raise ex
 
   if type(resp_obj) is dict and 'error' in resp_obj and resp_obj['error']:
     LOGGER.error('API call failed: %s', resp_obj['reason'])
