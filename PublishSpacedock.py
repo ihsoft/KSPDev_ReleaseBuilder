@@ -175,8 +175,6 @@ def main(argv):
   print 'Publishing the release...'
 
   # Init Spacedock client.
-  SpacedockClient.MOD_ID = mod_id
-
   login = opts['login']
   if not login:
     sys.stdout.write('Spacedock login: ')
@@ -192,7 +190,7 @@ def main(argv):
     print 'Spacedock password: <PROVIDED>'
   SpacedockClient.API_PASS = password
 
-  SpacedockClient.UploadFile(filename, desc, mod_version, game_version)
+  SpacedockClient.UploadFile(mod_id, filename, desc, mod_version, game_version)
   print 'DONE!'
   print 'The new version is now availabe and the followers are notified!'
 

@@ -28,10 +28,6 @@ from utils import FormDataUtil
 API_LOGIN = None
 API_PASS = None
 
-# The Spacedock mod ID to work with. It must be set before using the client.
-# To get it, open the mod overview and extract the number from the URL.
-MOD_ID = None
-
 # Endpoint for all the API requests
 API_BASE_URL = 'https://spacedock.info'
 
@@ -84,8 +80,8 @@ def GetKSPVersions(pattern=None):
   """
   global cached_versions
   if not cached_versions:
-    LOGGER.debug('Requesting versions from: %s', API_BASE_URL)
-    response = _CallAPI(API_BASE_URL + API_GET_VERSIONS, None, None)
+    LOGGER.debug('Requesting versions to cache...')
+    response = _CallAPI(_MakeAPIUrl(API_GET_VERSIONS), None, None)
     cached_versions = map(
         lambda x: {'name': x['friendly_version'], 'id': x['id']}, response[0])
   if pattern:
@@ -98,22 +94,30 @@ def GetModDetails(mod_id):
   """Gets the mod informnation.
 
   This call does NOT require authorization.
+
+  Args:
+    mod_id: The mod to request.
+  Returns:
+    The response object.
   """
-  url = API_BASE_URL + API_GET_MOD.format(mod_id=mod_id)
+  url = _MakeAPIUrl(API_GET_MOD, mod_id=mod_id)
   response_obj, _ = _CallAPI(url, None, None)
   return response_obj
 
 
-def UploadFile(filepath, changelog, mod_version, game_version):
+def UploadFile(mod_id, filepath, changelog, mod_version, game_version):
   """Uploads the file to the CurseForge project.
 
+  The new file immediately becomes a default version.
+
   Args:
+    mod_id: The mod ID to update.
     filepath: A full or relative path to the local file.
     changelog: The change log content.
     mod_version: The version of the mod being published.
     game_version: The KSP version to publish for.
   Returns:
-    The response object, returned by the API.
+    The response object.
   """
 
   headers, data = FormDataUtil.EncodeFormData([
@@ -124,8 +128,12 @@ def UploadFile(filepath, changelog, mod_version, game_version):
       { 'name': 'zipball', 'filename': filepath },
   ])
   url, headers = _GetAuthorizedEndpoint(
-      API_UPDATE_MOD_TMPL.format(mod_id=MOD_ID), headers)
+      API_UPDATE_MOD_TMPL.format(mod_id=mod_id), headers)
   resp = _CallAPI(url, data=data, headers=headers)
+
+
+def _MakeAPIUrl(action_path, **kwargs):
+  return API_BASE_URL + action_path.format(**kwargs)
 
 
 def _CallAPI(url, data, headers, raise_on_error=True):
@@ -154,15 +162,15 @@ def _CallAPI(url, data, headers, raise_on_error=True):
   return resp_obj, response.info().dict
 
 
-def _GetAuthorizedEndpoint(api_path, headers=None):
+def _GetAuthorizedEndpoint(api_path, headers=None, **kwargs):
   """Gets API URL and the authorization headers.
 
   The login/password must be set in the global variables API_LOGIN/API_PASS.
   """
   global authorized_cookie
 
-  LOGGER.debug('Getting authorized endpoint for: %s', api_path)
-  url = API_BASE_URL + api_path
+  url = _MakeAPIUrl(api_path, **kwargs)
+  LOGGER.debug('Getting authorized endpoint for: %s', url)
   if not headers:
     headers = {}
 
