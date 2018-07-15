@@ -48,18 +48,22 @@ authorized_cookie = None
 
 
 class Error(Exception):
+  """Genric API client error."""
   pass
 
 
 class AuthorizationRequiredError(Error):
+  """The method called requires authorization, but none has been provided."""
   pass
 
 
 class BadCredentialsError(Error):
+  """The provided authorization token is refused."""
   pass
 
 
 class BadResponseError(Error):
+  """Generic error from the API endpoint."""
   pass
 
 
@@ -128,11 +132,12 @@ def UploadFile(mod_id, filepath, changelog, mod_version, game_version):
       { 'name': 'zipball', 'filename': filepath },
   ])
   url, headers = _GetAuthorizedEndpoint(
-      API_UPDATE_MOD_TMPL.format(mod_id=mod_id), headers)
+      API_UPDATE_MOD_TMPL, headers, mod_id=mod_id)
   resp = _CallAPI(url, data=data, headers=headers)
 
 
 def _MakeAPIUrl(action_path, **kwargs):
+  """Makes a URL for the action."""
   return API_BASE_URL + action_path.format(**kwargs)
 
 
