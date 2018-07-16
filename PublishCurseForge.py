@@ -100,7 +100,7 @@ def main(argv):
   parser.add_argument(
       '--project', action='store', metavar='<project ID>', required=True,
       help='''the ID of the project to publish to. To get it, go to the project
-          overview in CurseForge.''')
+          overview on CurseForge.''')
   parser.add_argument(
       '--token', action='store', metavar='<API token>', required=True,
       help='''the token to authorize in API. To obtain this token go to the

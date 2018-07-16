@@ -89,8 +89,9 @@ def main(argv):
       '''))
   parser.add_argument(
       '--project', action='store', metavar='<project ID>', required=True,
-      help='''the ID of the project to publish to. To get it, go to the project
-          overview in CurseForge.''')
+      help='''the ID of the project to publish to. To get it, go to the mod
+          overview on Spacedock and extarct the number from the URL:
+          /mod/<project ID>/...''')
   parser.add_argument(
       '--changelog', action='store', metavar='<file path>', required=True,
       help='''the file to get the release description from. The top lines till
@@ -103,19 +104,19 @@ def main(argv):
       '--ksp_version', action='store', metavar='<"latest" | regexp>',
       default='latest',
       help='''the RegExp pattern to match the target KSP version. If set to the
-           keyword "latest", then the script will use the maximum version,
-           known to Spacedock. [Default: %(default)s]''')
+          keyword "latest", then the script will use the maximum version,
+          known to Spacedock. [Default: %(default)s]''')
   parser.add_argument(
       '--changelog_breaker', action='store', metavar='<regexp>',
       default=r'^\s*$',
       help='''the RegExp to detect the end of the release description in the
           CHANGELOG. This expression is applied per the file line.
-           [Default: %(default)s]''')
+          [Default: %(default)s]''')
   parser.add_argument(
       '--version_extract', action='store', metavar='<regexp>',
       default='.+?_v(.+?)\\.zip',
       help='''the RegExp to extract the version tag from the archive name.
-           [Default: %(default)s]''')
+          [Default: %(default)s]''')
   parser.add_argument(
       '--login', action='store', metavar='<SD login>',
       help='''the login for the Spacedock account. If not set, then it will be
