@@ -97,11 +97,24 @@ def main(argv):
           the first empty line are taken. The description is expected to use
           the 'markdown' syntax.''')
   parser.add_argument(
-      '--ksp_version', action='store', metavar='<regexp>', required=True,
-      help='''the pattern to match the target KSP version''')
-  parser.add_argument(
       '--archive', action='store', metavar='<file path>', required=True,
       help='''the archive file to publish.''')
+  parser.add_argument(
+      '--ksp_version', action='store', metavar='<"latest" | regexp>',
+      help='''the RegExp pattern to match the target KSP version. If set to the
+           keyword "latest", then the script will use the maximum version,
+           known to Spacedock. [Default: %(default)s]''')
+  parser.add_argument(
+      '--changelog_breaker', action='store', metavar='<regexp>',
+      default=r'^\s*$',
+      help='''the RegExp to detect the end of the release description in the
+          CHANGELOG. This expression is applied per the file line.
+           [Default: %(default)s]''')
+  parser.add_argument(
+      '--version_extract', action='store', metavar='<regexp>',
+      default='.+?_v(.+?)\\.zip',
+      help='''the RegExp to extract the version tag from the archive name.
+           [Default: %(default)s]''')
   parser.add_argument(
       '--login', action='store', metavar='<SD login>',
       help='''the login for the Spacedock account. If not set, then it will be
@@ -110,17 +123,6 @@ def main(argv):
       '--pass', action='store', metavar='<SD password>',
       help='''the password for the Spacedock account. If not set, then it will
           be asked in the command line.''')
-  parser.add_argument(
-      '--changelog_breaker', action='store', metavar='<regexp>',
-      default=r'^\s*$',
-      help='''the RegExp to detect the end of the release description in the
-          CHANGELOG. This expression is applied per the file line.
-          Default: "^\s*$".''')
-  parser.add_argument(
-      '--version_extract', action='store', metavar='<regexp>',
-      default='.+?_v(.+?)\\.zip',
-      help='''the RegExp to extract the version tag from the archive name.
-          Default: ".+?_(v.+?)\.zip"''')
   opts = vars(parser.parse_args(argv[1:]))
 
   mod_id = opts['project']
