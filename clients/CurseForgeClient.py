@@ -174,6 +174,7 @@ def _CallAPI(url, data, headers, raise_on_error=True):
     request = urllib2.Request(url, data, headers=headers or {})
     response = urllib2.urlopen(request)
     resp_obj = json.loads(response.read())
+    headers = response.info().dict
   except urllib2.HTTPError as ex:
     resp_obj = { 'error': True, 'reason': '%d - %s' % (ex.code, ex.reason) }
     try:
@@ -185,15 +186,19 @@ def _CallAPI(url, data, headers, raise_on_error=True):
     if ex.code == 403:
       raise BadCredentialsError(resp_obj['errorMessage'])
 
-  if type(resp_obj) is dict and resp_obj.get('error'):
+  # Rewrite the known error responses.
+  if type(resp_obj) is dict:
     if resp_obj.get('message'):
-      resp_obj['reason'] = resp_obj.get('message')
-      del resp_obj['message']
+      resp_obj = { 'error': True, 'reason': resp_obj.get('message') }
+    elif resp_obj.get('errorMessage'):
+      resp_obj = { 'error': True, 'reason': resp_obj.get('errorMessage') }
+
+  if type(resp_obj) is dict and resp_obj.get('error'):
     LOGGER.error('API call failed: %s', resp_obj['reason'])
     if raise_on_error:
       raise BadResponseError(resp_obj['reason'])
     return resp_obj, None
-  return resp_obj, response.info().dict
+  return resp_obj, headers
 
 
 def _MakeAPIUrl(action_path, **kwargs):
