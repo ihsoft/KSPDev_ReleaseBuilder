@@ -4,5 +4,5 @@ PublishSpacedock.py^
  --login=login^
  --pass=password^
  --changelog=CHANGELOG.md^
- --ksp_version=^1\.4\.4$^
+ --ksp_version=latest^
  --archive=MyTestMod_v1.0.zip

@@ -101,6 +101,7 @@ def main(argv):
       help='''the archive file to publish.''')
   parser.add_argument(
       '--ksp_version', action='store', metavar='<"latest" | regexp>',
+      default='latest',
       help='''the RegExp pattern to match the target KSP version. If set to the
            keyword "latest", then the script will use the maximum version,
            known to Spacedock. [Default: %(default)s]''')
@@ -126,17 +127,26 @@ def main(argv):
   opts = vars(parser.parse_args(argv[1:]))
 
   mod_id = opts['project']
+
   versions_re = opts['ksp_version']
-  game_version = map(
-      lambda x: x['name'],
-      SpacedockClient.GetKSPVersions(pattern=versions_re))
-  if not game_version:
-    print 'ERROR: No versions found for RegExp: %s' % versions_re
-    exit(-1)
-  if len(game_version) > 1:
-    print 'ERROR: Multiple versions matched RegExp: %s' % game_version
-    exit(-1)
-  game_version = game_version[0]
+  if versions_re != 'latest':
+    all_versions = map(
+        lambda x: x['name'],
+        SpacedockClient.GetKSPVersions(pattern=versions_re))
+    if not all_versions:
+      print 'ERROR: No versions found for RegExp: %s' % versions_re
+      exit(-1)
+    if len(all_versions) > 1:
+      print 'ERROR: Multiple versions matched RegExp: %s' % all_versions
+      exit(-1)
+    game_version = all_versions[0]
+  else:
+    all_versions = sorted(
+        SpacedockClient.GetKSPVersions(), key=lambda x: x['id'], reverse=True)
+    if not all_versions:
+      print 'ERROR: No versions found!'
+      exit(-1)
+    game_version = all_versions[0]['name']
 
   desc = _ExtractDescription(opts['changelog'], opts['changelog_breaker'])
   filename = opts['archive']
