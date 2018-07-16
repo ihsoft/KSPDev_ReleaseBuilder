@@ -182,6 +182,9 @@ def _CallAPI(url, data, headers, raise_on_error=True):
       raise BadCredentialsError(resp_obj['errorMessage'])
 
   if type(resp_obj) is dict and resp_obj.get('error'):
+    if resp_obj.get('message'):
+      resp_obj['reason'] = resp_obj.get('message')
+      del resp_obj['message']
     LOGGER.error('API call failed: %s', resp_obj['reason'])
     if raise_on_error:
       raise BadResponseError(resp_obj['reason'])
