@@ -17,6 +17,7 @@ Example:
 """
 import json
 import logging
+import os.path
 import re
 import urllib2
 
@@ -133,7 +134,7 @@ def UploadFileEx(project_id, metadata, filepath):
   return response_obj
 
 
-def UploadFile(project_id, filepath, changelog, versions_pattern,
+def UploadFile(project_id, filepath, changelog, game_versions,
                title=None, release_type='release',
                changelog_type='markdown'):
   """Uploads the file to the CurseForge project.
@@ -144,7 +145,7 @@ def UploadFile(project_id, filepath, changelog, versions_pattern,
     project_id: The Curse project ID.
     filepath: A full or relative path to the local file.
     changelog: The change log content.
-    versions_pattern: The RegExp string to find the target versions.
+    game_versions: The KSP versions to upload the file for.
     title: The user friendly title of the file. If not provided, then the file
         name will be used.
     release_type: The type of the release. Allowed values: release, alpha, beta.
@@ -153,11 +154,14 @@ def UploadFile(project_id, filepath, changelog, versions_pattern,
   Returns:
     The response object, returned by the API.
   """
+  versions = filter(lambda x: x['name'] in game_versions, GetKSPVersions())
+  if not title:
+    title = os.path.splitext(os.path.basename(filepath))[0]
   metadata = {
     'changelog': changelog,
     'changelogType': changelog_type,
     'displayName': title,
-    'gameVersions': map(lambda x: x['id'], GetKSPVersions(versions_pattern)),
+    'gameVersions': map(lambda x: x['id'], versions),
     'releaseType': release_type,
   }
   return UploadFileEx(project_id, metadata, filepath)
