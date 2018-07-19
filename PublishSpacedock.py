@@ -1,8 +1,8 @@
 # Public domain license.
 # Author: igor.zavoychinskiy@gmail.com
 # GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder
-# $version: 1
-# $date: 07/13/2018
+# $version: 2
+# $date: 07/19/2018
 
 """ Script to publish releases to Spacedock.
 
@@ -26,7 +26,7 @@ it takes it from the release arhcive name, assuming it has format:
 '*_v<version>.zip'. When it's different, you need to specify the extraction
 RegExp:
 
-  --version_extract=.+?_v(.+?)\\.zip
+  --tag_extract=.+?_v(.+?)\\.zip
 
 HINT. Passing all the arguments via the command line may be not convinient.
 Not to mention the quotes and back slashes issues. To avoid all this burden,
@@ -90,7 +90,7 @@ def main(argv):
   parser.add_argument(
       '--project', action='store', metavar='<project ID>', required=True,
       help='''the ID of the project to publish to. To get it, go to the mod
-          overview on Spacedock and extarct the number from the URL:
+          overview on Spacedock and extract the number from the URL:
           /mod/<project ID>/...''')
   parser.add_argument(
       '--changelog', action='store', metavar='<file path>', required=True,
@@ -113,7 +113,7 @@ def main(argv):
           CHANGELOG. This expression is applied per the file line.
           [Default: %(default)s]''')
   parser.add_argument(
-      '--version_extract', action='store', metavar='<regexp>',
+      '--tag_extract', action='store', metavar='<regexp>',
       default='.+?_v(.+?)\\.zip',
       help='''the RegExp to extract the version tag from the archive name.
           [Default: %(default)s]''')
@@ -152,7 +152,7 @@ def main(argv):
   desc = _ExtractDescription(opts['changelog'], opts['changelog_breaker'])
   filename = opts['archive']
 
-  parts = re.findall(opts['version_extract'], os.path.basename(filename))
+  parts = re.findall(opts['tag_extract'], os.path.basename(filename))
   if len(parts) != 1:
     print 'ERROR: cannot extract version tag from file name: %s' % filename
     exit(-1)
