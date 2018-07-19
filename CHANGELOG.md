@@ -1,6 +1,8 @@
-# 3.0 (pre-release):
+# KPSPDev: Release Tools 1.0 (July 19th, 2018):
+* [Wiki] [New topic](https://github.com/ihsoft/KSPDev_ReleaseBuilder/wiki/Release-publishing-tools)
 * [Enhancement] Add CurseForge publishing script.
 * [Enhancement] Add Spacedock publishing script.
+* [Enhancement] Add GitHub publishing script.
 
 # KPSPDev: ReleaseBuilder v2.1 (August 15th, 2017):
 * [Enhancement] Add new configuration parameter [RELEASE_NAME_FREE_FORMAT](https://github.com/ihsoft/KSPDev/wiki/ReleaseBuilder-Schema-1.1).
