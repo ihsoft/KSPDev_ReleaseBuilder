@@ -1,3 +1,6 @@
+# KPSPDev: Release Tools 1.1 (pre-release):
+* [Fix] Properly handle the Curse versions with no third component (e.g. "1.5").
+
 # KPSPDev: Release Tools 1.0 (July 19th, 2018):
 * [Wiki] [New topic](https://github.com/ihsoft/KSPDev_ReleaseBuilder/wiki/Release-publishing-tools)
 * [Enhancement] Add CurseForge publishing script.
