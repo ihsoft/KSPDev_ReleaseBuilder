@@ -11,7 +11,7 @@ Once you have it, define how you'd like the target release be created.
 
 Example:
 
-  $ PublishCurseForge.py\
+  $ PublishGitHub.py\
     --user=my_github_user\
     --repo=MyGitHubMod\
     --token=1111111111122222222222222333333333333333\
@@ -136,7 +136,7 @@ def main(argv):
   user = opts['user']
   repo = opts['repo']
 
-  # Init CurseForge client.
+  # Init GitHub client.
   GitHubClient.API_TOKEN = opts['token']
 
   desc = _ExtractDescription(opts['changelog'], opts['changelog_breaker'])
