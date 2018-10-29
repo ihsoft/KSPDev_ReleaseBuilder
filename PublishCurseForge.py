@@ -1,7 +1,7 @@
 # Public domain license.
 # Author: igor.zavoychinskiy@gmail.com
 # GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder
-# $version: 3
+# $version: 4
 # $date: 10/28/2018
 
 """ Script to publish releases to Kerbal CurseForge.
@@ -139,6 +139,10 @@ def main(argv):
       default='.+?_(v.+?)\\.zip',
       help='''the RegExp to extract the version tag from the archive name.
           [Default: %(default)s]''')
+  parser.add_argument(
+      '--github', action='store', metavar='<GitHub>',
+      help='''the GitHub project and user, separated by "/" symbol. Used when
+          expanding the GitHub links. Example: "ihsoft/KIS"''')
   opts = vars(parser.parse_args(argv[1:]))
 
   project_id = opts['project']
@@ -169,6 +173,8 @@ def main(argv):
 
   desc = ChangelogUtils.ExtractDescription(
       opts['changelog'], opts['changelog_breaker'])
+  if opts['github']:
+    desc = ChangelogUtils.ProcessGitHubLinks(desc, opts['github'])
   filename = opts['archive']
 
   if opts['title']:

@@ -1,7 +1,7 @@
 # Public domain license.
 # Author: igor.zavoychinskiy@gmail.com
 # GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder
-# $version: 4
+# $version: 5
 # $date: 10/28/2018
 
 """ Script to publish releases to Spacedock.
@@ -126,6 +126,10 @@ def main(argv):
       '--pass', action='store', metavar='<SD password>',
       help='''the password for the Spacedock account. If not set, then it will
           be asked in the command line.''')
+  parser.add_argument(
+      '--github', action='store', metavar='<GitHub>',
+      help='''the GitHub project and user, separated by "/" symbol. Used when
+          expanding the GitHub links. Example: "ihsoft/KIS"''')
   opts = vars(parser.parse_args(argv[1:]))
 
   mod_id = opts['project']
@@ -152,6 +156,8 @@ def main(argv):
 
   desc = ChangelogUtils.ExtractDescription(
       opts['changelog'], opts['changelog_breaker'])
+  if opts['github']:
+    desc = ChangelogUtils.ProcessGitHubLinks(desc, opts['github'])
   filename = opts['archive']
 
   parts = re.findall(opts['version_extract'], os.path.basename(filename))

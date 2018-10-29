@@ -1,4 +1,5 @@
 # KPSPDev: ReleaseBuilder v3.1 (pre-release):
+* [Enhancement] Add `--github` argument to have the GitHub CHANGELOG links resolved.
 * [Fix] Properly handle the Curse versions with no third component (e.g. "1.5").
 * [Change] Rename argument SpaceDock's `--tag_extarct` to `--version_extract`.
 * [Change] Introduce a package to handle the CHANGELOG markup.
