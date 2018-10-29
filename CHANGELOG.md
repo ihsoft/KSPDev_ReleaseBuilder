@@ -1,11 +1,11 @@
-# KPSPDev: ReleaseBuilder v3.1 (pre-release):
+# KPSPDev: ReleaseTools v1.1 (October 29th, 2018):
 * [Enhancement] Add `--github` argument to have the GitHub CHANGELOG links resolved.
 * [Fix] Properly handle the Curse versions with no third component (e.g. "1.5").
 * [Change] Rename argument SpaceDock's `--tag_extarct` to `--version_extract`.
 * [Change] Introduce a package to handle the CHANGELOG markup.
 * [Change] Major folder refactoring of the repo.
 
-# KPSPDev: ReleaseBuilder v3.0 (July 19th, 2018):
+# KPSPDev: ReleaseTools v1.0 (July 19th, 2018):
 * [Wiki] [New topic](https://github.com/ihsoft/KSPDev_ReleaseBuilder/wiki/Release-publishing-tools)
 * [Enhancement] Add CurseForge publishing script.
 * [Enhancement] Add Spacedock publishing script.
