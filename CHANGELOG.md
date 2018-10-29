@@ -1,5 +1,6 @@
 # KPSPDev: ReleaseBuilder v3.1 (pre-release):
 * [Fix] Properly handle the Curse versions with no third component (e.g. "1.5").
+* [Change] Rename argument SpaceDock's `--tag_extarct` to `--version_extract`.
 
 # KPSPDev: ReleaseBuilder v3.0 (July 19th, 2018):
 * [Wiki] [New topic](https://github.com/ihsoft/KSPDev_ReleaseBuilder/wiki/Release-publishing-tools)
