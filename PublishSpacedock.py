@@ -1,7 +1,7 @@
 # Public domain license.
 # Author: igor.zavoychinskiy@gmail.com
 # GitHub: https://github.com/ihsoft/KSPDev_ReleaseBuilder
-# $version: 3
+# $version: 4
 # $date: 10/28/2018
 
 """ Script to publish releases to Spacedock.
@@ -62,6 +62,7 @@ import sys
 import textwrap
 
 from clients import SpacedockClient
+from utils import ChangelogUtils
 
 
 LOGGER = logging.getLogger()
@@ -149,7 +150,8 @@ def main(argv):
       exit(-1)
     game_version = all_versions[0]['name']
 
-  desc = _ExtractDescription(opts['changelog'], opts['changelog_breaker'])
+  desc = ChangelogUtils.ExtractDescription(
+      opts['changelog'], opts['changelog_breaker'])
   filename = opts['archive']
 
   parts = re.findall(opts['version_extract'], os.path.basename(filename))
@@ -212,22 +214,6 @@ def _Shutdown():
   """Finilizes the logging system."""
   LOGGER.info('Ending SpaceDock session...')
   logging.shutdown()
-
-
-def _ExtractDescription(changelog_file, breaker_re):
-  """Helper method to extract the meaningful part of the release changelog."""
-  with open(changelog_file, 'r') as f:
-    lines= f.readlines()
-  changelog = ''
-  for line in lines:
-    # Ignore any trailing empty lines.
-    if not changelog and not line.strip():
-      continue
-    # Stop at the breaker.
-    if re.match(breaker_re, line.strip()):
-      break
-    changelog += line
-  return changelog.strip()
 
 
 main(sys.argv)
