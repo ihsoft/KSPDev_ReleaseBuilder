@@ -179,8 +179,9 @@ def _CallAPI(url, data, headers, raise_on_error=True):
     resp_obj = { 'error': True, 'reason': '%d - %s' % (ex.code, ex.reason) }
     try:
       resp_obj = json.loads(ex.read())
-    except:
-      pass  # Not a JSON response
+    except Exception as e:
+      if 'errorMessage' not in resp_obj:
+        resp_obj['errorMessage'] = str(e)
     if ex.code == 401:
       raise AuthorizationRequiredError(resp_obj['errorMessage'])
     if ex.code == 403:
