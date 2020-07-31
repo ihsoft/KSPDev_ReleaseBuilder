@@ -1,5 +1,6 @@
 # KPSPDev: ReleaseTools v1.2 (July 30th, 2020):
 * [Change] Better handling of SSL/API errors in the `CurseClient`.
+* [Fix] Opt-out from certificate validation when calling `CurseForge` and `Cloudflare`.
 
 # KPSPDev: ReleaseTools v1.1 (October 29th, 2018):
 * [Enhancement] Add `--github` argument to have the GitHub CHANGELOG links resolved.

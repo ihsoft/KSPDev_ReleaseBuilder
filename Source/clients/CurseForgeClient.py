@@ -19,6 +19,7 @@ import json
 import logging
 import os.path
 import re
+import ssl
 import urllib2
 
 from utils import FormDataUtil
@@ -172,7 +173,8 @@ def _CallAPI(url, data, headers, raise_on_error=True):
   resp_obj = { 'error': True, 'reason': 'unknown' }
   try:
     request = urllib2.Request(url, data, headers=headers or {})
-    response = urllib2.urlopen(request)
+    gcontext = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+    response = urllib2.urlopen(request, context=gcontext)
     resp_obj = json.loads(response.read())
     headers = response.info().dict
   except urllib2.HTTPError as ex:
